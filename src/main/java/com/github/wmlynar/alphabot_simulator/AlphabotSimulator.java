@@ -2,33 +2,36 @@ package com.github.wmlynar.alphabot_simulator;
 
 public class AlphabotSimulator {
 
-	private double ticksPerMeter;
-	private double baseWidth;
 	private double time;
+	
+	private double baseWidth;
+	
 	private double speed;
-	private double odometerTickCountLeft = 0;
-	private double odometerTickCountRight = 0;
 	private double rotationRightRadiansPerSecond;
 	
+	
+	private OdometerWithDirection odometerLeft = new OdometerWithDirection();
+	private OdometerWithDirection odometerRight = new OdometerWithDirection();
+
 	public void simulateSeconds(double dt) {
-		odometerTickCountLeft += speed * dt * ticksPerMeter + rotationRightRadiansPerSecond*baseWidth/2*dt*ticksPerMeter;
-		odometerTickCountRight += speed * dt * ticksPerMeter - rotationRightRadiansPerSecond*baseWidth/2*dt*ticksPerMeter;
+		double distanceLeft = speed * dt + rotationRightRadiansPerSecond*baseWidth/2*dt;
+		double distanceRight = speed * dt - rotationRightRadiansPerSecond*baseWidth/2*dt;
+		
+		odometerLeft.driveDistance(distanceLeft);
+		odometerRight.driveDistance(distanceRight);
 	}
 
 	public int getOdometerTicksLeft() {
-		return roundTicks(odometerTickCountLeft);
+		return odometerLeft.getTicks();
 	}
 
 	public int getOdometerTicksRight() {
-		return roundTicks(odometerTickCountRight);
-	}
-
-	private int roundTicks(double odometerTickCountRight) {
-		return (int)(Math.floor(Math.abs(odometerTickCountRight))*Math.signum(odometerTickCountRight));
+		return odometerRight.getTicks();
 	}
 
 	public void setTicksPerMeter(double d) {
-		this.ticksPerMeter=d;
+		odometerLeft.setTicksPerMeter(d);
+		odometerRight.setTicksPerMeter(d);
 	}
 
 	public void setBaseWidth(double d) {

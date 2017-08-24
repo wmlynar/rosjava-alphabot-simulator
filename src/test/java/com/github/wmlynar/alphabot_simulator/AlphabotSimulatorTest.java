@@ -42,7 +42,7 @@ public class AlphabotSimulatorTest {
 		
 		//then
 		assertEquals(26,simulator.getOdometerTicksLeft());
-		assertEquals(-26,simulator.getOdometerTicksRight());
+		assertEquals(-27,simulator.getOdometerTicksRight());
 	}
 
 	@Test
@@ -55,8 +55,22 @@ public class AlphabotSimulatorTest {
 		simulator.simulateSeconds(1);
 		
 		//then
-		assertEquals(-26,simulator.getOdometerTicksLeft());
+		assertEquals(-27,simulator.getOdometerTicksLeft());
 		assertEquals(26,simulator.getOdometerTicksRight());
+	}
+
+	@Test
+	public void testForwardAndRotateRight() {
+		//given
+		simulator.setSpeedMetersPerSecond(1);
+		simulator.setRotationRightRadiansPerSecond(-Math.PI/2);
+		
+		//when
+		simulator.simulateSeconds(1);
+		
+		//then
+		assertEquals(200-27,simulator.getOdometerTicksLeft());
+		assertEquals(200+26,simulator.getOdometerTicksRight());
 	}
 
 }
