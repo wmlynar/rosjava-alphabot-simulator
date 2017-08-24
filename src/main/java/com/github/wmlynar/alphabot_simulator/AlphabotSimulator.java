@@ -8,6 +8,24 @@ public class AlphabotSimulator {
 	private double speed;
 	private double odometerTickCountLeft = 0;
 	private double odometerTickCountRight = 0;
+	private double rotationRightRadiansPerSecond;
+	
+	public void simulateSeconds(double dt) {
+		odometerTickCountLeft += speed * dt * ticksPerMeter + rotationRightRadiansPerSecond*baseWidth/2*dt*ticksPerMeter;
+		odometerTickCountRight += speed * dt * ticksPerMeter - rotationRightRadiansPerSecond*baseWidth/2*dt*ticksPerMeter;
+	}
+
+	public int getOdometerTicksLeft() {
+		return roundTicks(odometerTickCountLeft);
+	}
+
+	public int getOdometerTicksRight() {
+		return roundTicks(odometerTickCountRight);
+	}
+
+	private int roundTicks(double odometerTickCountRight) {
+		return (int)(Math.floor(Math.abs(odometerTickCountRight))*Math.signum(odometerTickCountRight));
+	}
 
 	public void setTicksPerMeter(double d) {
 		this.ticksPerMeter=d;
@@ -25,16 +43,8 @@ public class AlphabotSimulator {
 		this.speed = speed;
 	}
 
-	public void simulateSeconds(double dt) {
-		odometerTickCountLeft += speed * dt * ticksPerMeter;
-		odometerTickCountRight += speed * dt * ticksPerMeter;
+	public void setRotationRightRadiansPerSecond(double d) {
+		this.rotationRightRadiansPerSecond = d;
 	}
-
-	public int getOdometerTicksLeft() {
-		return (int) Math.floor(odometerTickCountLeft);
-	}
-
-	public int getOdometerTicksRight() {
-		return (int)Math.floor(odometerTickCountRight);
-	}
+	
 }
