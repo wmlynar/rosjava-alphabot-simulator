@@ -147,16 +147,16 @@
 				<version>1.8</version>
 				<executions>
 					<execution>
-						<phase>deploy</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
 						<configuration>
 							<target>
-								<echo message="Shuting down remote application" />
-								<sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}"
-									password="${pi.password}" trust="true" failonerror="false"
-									verbose="true" command="pkill java" />
+								<!-- <echo message="Shuting down remote application" /> -->
+								<!-- <sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}" -->
+								<!-- password="${pi.password}" trust="true" failonerror="false" -->
+								<!-- verbose="true" command="pkill java" /> -->
 
 								<echo message="Ensuring the target directory exists on the Raspberry Pi" />
 								<sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}"
@@ -170,11 +170,12 @@
 									port="${pi.port}" trust="true" verbose="true" failonerror="true">
 								</scp>
 
-								<echo message="Running the JAR file on the Raspberry Pi" />
-								<sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}"
-									password="${pi.password}" trust="true" failonerror="false"
-									verbose="true"
-									command="export DISPLAY=:0.0;java -jar ${pi.deployDirectory}/${project.build.finalName}-jar-with-dependencies.jar >/dev/null 2>&amp;1 &amp; echo $!" />
+								<!-- <echo message="Running the JAR file on the Raspberry Pi" /> -->
+								<!-- <sshexec host="${pi.host}" port="${pi.port}" username="${pi.user}" -->
+								<!-- password="${pi.password}" trust="true" failonerror="false" -->
+								<!-- verbose="true" -->
+								<!-- command="export DISPLAY=:0.0;java -jar ${pi.deployDirectory}/${project.build.finalName}-jar-with-dependencies.jar 
+									>/dev/null 2>&amp;1 &amp; echo $!" /> -->
 							</target>
 						</configuration>
 					</execution>

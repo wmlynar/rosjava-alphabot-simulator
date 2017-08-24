@@ -16,7 +16,7 @@ public class AlphabotSimulator {
 	public void simulateSeconds(double dt) {
 		double distanceLeft = speed * dt + rotationRightRadiansPerSecond*baseWidth/2*dt;
 		double distanceRight = speed * dt - rotationRightRadiansPerSecond*baseWidth/2*dt;
-		
+
 		odometerLeft.driveDistance(distanceLeft);
 		odometerRight.driveDistance(distanceRight);
 	}
