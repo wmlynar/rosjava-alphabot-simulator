@@ -5,13 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AlphabotSimulatorTest {
+public class AlphabotSpeedModelTest {
 	
-	private AlphabotSimulator simulator;
+	private AlphabotSpeedModel simulator;
 
 	@Before
 	public void setUp() {
-		simulator = new AlphabotSimulator();
+		simulator = new AlphabotSpeedModel();
 		simulator.setTicksPerMeter(200); // 1/.2*40
 		simulator.setBaseWidth(0.17);
 		simulator.initializeTime(0);
@@ -21,7 +21,7 @@ public class AlphabotSimulatorTest {
 	public void testForward() {
 		//given
 		simulator.setSpeedMetersPerSecond(1);
-		simulator.setRotationRightRadiansPerSecond(0);
+		simulator.setRotationRightHandRadiansPerSecond(0);
 		
 		//when
 		simulator.simulateSeconds(1);
@@ -35,7 +35,7 @@ public class AlphabotSimulatorTest {
 	public void testRotateRight() {
 		//given
 		simulator.setSpeedMetersPerSecond(0);
-		simulator.setRotationRightRadiansPerSecond(Math.PI/2);
+		simulator.setRotationRightHandRadiansPerSecond(Math.PI/2);
 		
 		//when
 		simulator.simulateSeconds(1);
@@ -49,7 +49,7 @@ public class AlphabotSimulatorTest {
 	public void testRotateLeft() {
 		//given
 		simulator.setSpeedMetersPerSecond(0);
-		simulator.setRotationRightRadiansPerSecond(-Math.PI/2);
+		simulator.setRotationRightHandRadiansPerSecond(-Math.PI/2);
 		
 		//when
 		simulator.simulateSeconds(1);
@@ -63,7 +63,7 @@ public class AlphabotSimulatorTest {
 	public void testForwardAndRotateRight() {
 		//given
 		simulator.setSpeedMetersPerSecond(1);
-		simulator.setRotationRightRadiansPerSecond(-Math.PI/2);
+		simulator.setRotationRightHandRadiansPerSecond(-Math.PI/2);
 		
 		//when
 		simulator.simulateSeconds(1);
