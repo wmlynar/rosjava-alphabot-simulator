@@ -15,8 +15,11 @@ public class SimulatorTicks {
 		DistanceController controllerLeft = new DistanceController();
 		DistanceController controllerRight = new DistanceController();
 		
-		double speed = 1;
+		double speed = 1.123;
 		double prevt = -1;
+		
+		double sumErrorLeft = 0;
+		double sumErrorRight = 0;
 		
 		for(double t=0; t<100; t+=0.2) {
 			if(prevt==-1) {
@@ -35,20 +38,23 @@ public class SimulatorTicks {
 			double measured = model.getTicksLeft() / ticksPerMeter;
 
 			double errorLeft = setpoint - measured;
-			double pwmLeft = errorLeft * 20;
-			model.setPwmLeft(pwmLeft);
+			sumErrorLeft += errorLeft*dt;
+			double pwmLeft = errorLeft * 20 + sumErrorLeft*3;
+			model.setPwmLeft(20 + pwmLeft);
 
 
 			// right
+			
 			setpoint = controllerRight.getDesiredDistance();
 			measured = model.getTicksRight() / ticksPerMeter;
 
 			double errorRight = setpoint - measured;
-			double pwmRight = errorRight * 30;
-			model.setPwmRight(pwmRight);
+			sumErrorRight += errorRight*dt;
+			double pwmRight = errorRight * 30 + sumErrorRight*3;
+			model.setPwmRight(20 + pwmRight);
 			
-			controllerLeft.setDesiredSpeed(1);
-			controllerRight.setDesiredSpeed(1);
+			controllerLeft.setDesiredSpeed(speed);
+			controllerRight.setDesiredSpeed(speed);
 			
 			System.out.println("pwmL: " + pwmLeft + " pwmR: " + pwmRight + " x: " + model.getX() + " y: " + model.getY() + " el: " + errorLeft + " er: " + errorRight);
 		}
